@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الذكاء (IQ) التفاعلي</title>
+    <style>
+        /* --- تنسيقات CSS --- */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .question-card {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .question-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #0056b3;
+        }
+        .option-label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 8px 0;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+        .option-label:hover {
+            background-color: #f0f0f0;
+        }
+        input[type="radio"] {
+            margin-left: 10px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .category-title {
+            font-size: 1.5em;
+            color: #d9534f;
+            border-bottom: 2px solid #d9534f;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+        #results {
+            margin-top: 30px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            font-size: 1.5em;
+            font-weight: bold;
+            background-color: #e9f5ff;
+            color: #0056b3;
+            display: none; /* يتم إظهاره بعد الإجابة */
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>اختبار الذكاء (IQ Test)</h1>
+        <form id="iq-test-form">
+            
+            <div class="category-title">القسم الأول: الاستدلال اللفظي</div>
+            
+            <div class="question-card">
+                <p class="question-text">1. ما هي الكلمة التي تُكمل العلاقة: **طائر** مثل **جناح** و **سمكة** مثل...؟</p>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="A"> خياشيم
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="B"> ذيل
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="C"> زعنفة
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="D"> حراشف
+                </label>
+            </div>
+
+            <div class="category-title">القسم الثاني: الاستدلال المنطقي والعددي</div>
+            
+            <div class="question-card">
+                <p class="question-text">2. أكمل المتتالية العددية: 3, 5, 9, 15, **...** (الزيادة: +2, +4, +6, ...) </p>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="A"> 21
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="B"> 23
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="C"> 25
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="D"> 27
+                </label>
+            </div>
+
+            <div class="category-title">القسم الثالث: الاستدلال البصري والمكاني</div>
+            
+            <div class="question-card">
+                <p class="question-text">3. أي من العناصر التالية لا ينتمي للمجموعة؟</p>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="A"> دائرة
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="B"> مربع
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="C"> مثلث
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="D"> شجرة
+                </label>
+            </div>
+
+            <button type="submit">إنهاء الاختبار وحساب النتيجة</button>
+        </form>
+
+        <div id="results"></div>
+
+    </div>
+
+    <script>
+        // --- كود JavaScript لحساب النتيجة والمنطق ---
+        
+        // 1. تحديد الإجابات الصحيحة والنقاط
+        const correctAnswers = {
+            q1: 'C', // زعنفة
+            q2: 'B', // 23
+            q3: 'D'  // شجرة
+        };
+
+        const scorePerQuestion = 5;
+        const totalQuestions = Object.keys(correctAnswers).length;
+        const maxScore = totalQuestions * scorePerQuestion;
+
+        // 2. جلب العناصر من HTML
+        const form = document.getElementById('iq-test-form');
+        const resultsDiv = document.getElementById('results');
+
+        // 3. معالج حدث الإرسال (Submit)
+        form.addEventListener('submit', function(event) {
+            // منع الإرسال التقليدي للصفحة
+            event.preventDefault();
+
+            let score = 0;
+            
+            // 4. المرور على كل سؤال
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = `q${i}`;
+                
+                // جلب الإجابة التي اختارها المستخدم لهذا السؤال
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                // التحقق ما إذا كان المستخدم قد أجاب على السؤال
+                if (selectedOption) {
+                    const userAnswer = selectedOption.value;
+                    
+                    // مقارنة إجابة المستخدم بالإجابة الصحيحة
+                    if (userAnswer === correctAnswers[questionName]) {
+                        score += scorePerQuestion;
+                    }
+                }
+            }
+            
+            // 5. عرض النتيجة
+            resultsDiv.style.display = 'block'; // إظهار قسم النتائج
+            resultsDiv.innerHTML = `
+                لقد أكملت الاختبار! <br>
+                نتيجتك هي: <strong>${score} / ${maxScore}</strong> نقطة.
+            `;
+            
+            // يمكنك هنا إضافة منطق لتحديد مستوى الذكاء بناءً على النتيجة
+            
+            // إيقاف التمرير للأعلى لعرض النتيجة فوراً
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الذكاء الشامل (IQ Test)</title>
+    <style>
+        /* --- تنسيقات CSS احترافية ومُنظّمة --- */
+        body {
+            font-family: 'Droid Arabic Naskh', 'Arial', sans-serif; /* استخدام خط عربي أفضل إن وجد */
+            background-color: #eef2f7; /* خلفية أفتح وأكثر هدوءاً */
+            color: #2c3e50;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2980b9;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .category-title {
+            font-size: 1.6em;
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+            margin-top: 40px;
+            font-weight: bold;
+        }
+        .question-card {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ecf0f1;
+            border-radius: 6px;
+            background-color: #fcfcfc;
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+        .option-label {
+            display: block;
+            margin-bottom: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s, border-color 0.2s;
+            border: 1px solid transparent;
+        }
+        .option-label:hover {
+            background-color: #ecf0f1;
+            border-color: #bdc3c7;
+        }
+        input[type="radio"]:checked + .option-text {
+            font-weight: bold;
+            color: #27ae60; /* تمييز الخيار المختار */
+        }
+        input[type="radio"] {
+            margin-left: 8px;
+        }
+        button {
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-top: 40px;
+            width: 100%;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px #27ae60;
+        }
+        button:hover {
+            background-color: #27ae60;
+            box-shadow: 0 2px #27ae60;
+        }
+        #results {
+            margin-top: 40px;
+            padding: 25px;
+            text-align: center;
+            border: 3px solid #3498db;
+            border-radius: 10px;
+            font-size: 1.7em;
+            font-weight: bold;
+            background-color: #d6eaf8;
+            color: #2980b9;
+            display: none;
+        }
+        .result-level {
+            font-size: 0.8em;
+            color: #e67e22;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>اختبار الذكاء الشامل (Professional IQ Test)</h1>
+        
+        <form id="iq-test-form">
+            
+            <div class="category-title">1. الاستدلال اللفظي</div>
+            
+            <div class="question-card"><p class="question-text">1. ما هي الكلمة التي تُكمل العلاقة: **مرساة** مثل **سفينة** و **فرامل** مثل...؟</p>
+                <label class="option-label"><input type="radio" name="q1" value="A"><span class="option-text">شراع</span></label>
+                <label class="option-label"><input type="radio" name="q1" value="B"><span class="option-text">مركبة</span></label>
+                <label class="option-label"><input type="radio" name="q1" value="C"><span class="option-text">مسرع</span></label>
+                <label class="option-label"><input type="radio" name="q1" value="D"><span class="option-text">توقف</span></label>
+            </div>
+            
+            <div class="question-card"><p class="question-text">2. الكلمة التي لا تنتمي للمجموعة هي:</p>
+                <label class="option-label"><input type="radio" name="q2" value="A"><span class="option-text">بهجة</span></label>
+                <label class="option-label"><input type="radio" name="q2" value="B"><span class="option-text">سرور</span></label>
+                <label class="option-label"><input type="radio" name="q2" value="C"><span class="option-text">تفاؤل</span></label>
+                <label class="option-label"><input type="radio" name="q2" value="D"><span class="option-text">كفاءة</span></label>
+            </div>
+
+            <div class="question-card"><p class="question-text">3. إذا كان "الأغنياء يملكون سيارات فارهة" و "سالم يملك سيارة فارهة"، فما هو الاستنتاج المؤكد؟</p>
+                <label class="option-label"><input type="radio" name="q3" value="A"><span class="option-text">سالم فقير</span></label>
+                <label class="option-label"><input type="radio" name="q3" value="B"><span class="option-text">سالم غني</span></label>
+                <label class="option-label"><input type="radio" name="q3" value="C"><span class="option-text">لا يوجد استنتاج مؤكد</span></label>
+                <label class="option-label"><input type="radio" name="q3" value="D"><span class="option-text">كل من يملك سيارة فارهة غني</span></label>
+            </div>
+            
+            <div class="category-title">2. الاستدلال العددي</div>
+
+            <div class="question-card"><p class="question-text">4. أكمل المتتالية العددية: 1, 4, 9, 16, 25, **...**</p>
+                <label class="option-label"><input type="radio" name="q4" value="A"><span class="option-text">30</span></label>
+                <label class="option-label"><input type="radio" name="q4" value="B"><span class="option-text">32</span></label>
+                <label class="option-label"><input type="radio" name="q4" value="C"><span class="option-text">36</span></label>
+                <label class="option-label"><input type="radio" name="q4" value="D"><span class="option-text">49</span></label>
+            </div>
+
+            <div class="question-card"><p class="question-text">5. يبلغ عمر الأب ثلاثة أضعاف عمر الابن. إذا كان عمر الابن 15 سنة، فما هو عمر الأب عندما كان الابن 5 سنوات؟</p>
+                <label class="option-label"><input type="radio" name="q5" value="A"><span class="option-text">40</span></label>
+                <label class="option-label"><input type="radio" name="q5" value="B"><span class="option-text">35</span></label>
+                <label class="option-label"><input type="radio" name="q5" value="C"><span class="option-text">45</span></label>
+                <label class="option-label"><input type="radio" name="q5" value="D"><span class="option-text">30</span></label>
+            </div>
+
+            <div class="question-card"><p class="question-text">6. إذا كانت $5 * 3 = 16$ و $4 * 2 = 10$، فما هو ناتج $6 * 4$؟</p>
+                <label class="option-label"><input type="radio" name="q6" value="A"><span class="option-text">20</span></label>
+                <label class="option-label"><input type="radio" name="q6" value="B"><span class="option-text">22</span></label>
+                <label class="option-label"><input type="radio" name="q6" value="C"><span class="option-text">25</span></label>
+                <label class="option-label"><input type="radio" name="q6"
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الذكاء الشامل (Professional IQ Test)</title>
+    <style>
+        /* --- تنسيقات CSS (تم تعديلها وإضافة الزر العائم) --- */
+        body {
+            font-family: 'Droid Arabic Naskh', 'Arial', sans-serif;
+            background-color: #eef2f7;
+            color: #2c3e50;
+            padding: 20px;
+            padding-bottom: 100px; /* إضافة مسافة سفلية للزر العائم */
+        }
+        .quiz-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2980b9;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .category-title {
+            font-size: 1.6em;
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+            margin-top: 40px;
+            font-weight: bold;
+        }
+        .question-card {
+            /* (باقي تنسيقات السؤال كما هي) */
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ecf0f1;
+            border-radius: 6px;
+            background-color: #fcfcfc;
+        }
+        /* ... (تنسيقات question-text و option-label) ... */
+
+        /* --- تنسيق الزر العائم الجديد --- */
+        .fixed-submit-bar {
+            position: fixed; /* تثبيت الزر في مكانه */
+            bottom: 0; /* وضعه في الأسفل */
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            z-index: 1000; /* لضمان ظهوره فوق باقي العناصر */
+            text-align: center;
+        }
+        #submit-button {
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            width: 80%; /* عرض مناسب */
+            max-width: 400px;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px #27ae60;
+        }
+        #submit-button:hover {
+            background-color: #27ae60;
+            box-shadow: 0 2px #27ae60;
+        }
+        /* ... (تنسيقات النتائج كما هي) ... */
+        #results {
+            /* ... (تنسيقات النتائج كما هي) ... */
+            margin-top: 40px;
+            padding: 25px;
+            text-align: center;
+            border: 3px solid #3498db;
+            border-radius: 10px;
+            font-size: 1.7em;
+            font-weight: bold;
+            background-color: #d6eaf8;
+            color: #2980b9;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>اختبار الذكاء الشامل (Professional IQ Test)</h1>
+        
+        <form id="iq-test-form">
+            <div class="category-title">1. الاستدلال اللفظي</div>
+            <div class="question-card"><p class="question-text">1. ما هي الكلمة التي تُكمل العلاقة: **مرساة** مثل **سفينة** و **فرامل** مثل...؟</p>...</div>
+            <div class="question-card"><p class="question-text">2. الكلمة التي لا تنتمي للمجموعة هي:</p>...</div>
+            <div class="question-card"><p class="question-text">3. إذا كان "الأغنياء يملكون سيارات فارهة"...</p>...</div>
+
+            <div class="category-title">2. الاستدلال العددي</div>
+            <div class="question-card"><p class="question-text">4. أكمل المتتالية العددية: 1, 4, 9, 16, 25, **...**</p>...</div>
+            <div class="question-card"><p class="question-text">5. يبلغ عمر الأب ثلاثة أضعاف عمر الابن...</p>...</div>
+            <div class="question-card"><p class="question-text">6. إذا كانت $5 * 3 = 16$ و $4 * 2 = 10$، فما هو ناتج $6 * 4$؟</p>...</div>
+
+            <div class="category-title">3. الاستدلال المنطقي</div>
+            <div class="question-card"><p class="question-text">7. كل الـ **A** هي **B**. بعض الـ **B** هي **C**...</p>...</div>
+            <div class="question-card"><p class="question-text">8. علي أطول من محمد. أحمد أقصر من محمد...</p>...</div>
+            <div class="question-card"><p class="question-text">9. المبدأ الذي لا ينتمي للمجموعة هو:</p>...</div>
+
+            <div class="category-title">4. الاستدلال المكاني</div>
+            <div class="question-card"><p class="question-text">10. إذا تم تدوير الشكل التالي (L) بمقدار 180 درجة...</p>...</div>
+            <div class="question-card"><p class="question-text">11. أي من الخيارات التالية لا يمكن استخدامه لبناء مُكعب؟</p>...</div>
+            <div class="question-card"><p class="question-text">12. إذا وضعت كلمة "IQ" أمام مرآة...</p>...</div>
+            
+            <div class="category-title">5. الذاكرة العاملة والمعالجة</div>
+            <div class="question-card"><p class="question-text">13. أي زوج من الكلمات التالية هما الأقرب في المعنى؟</p>...</div>
+            <div class="question-card"><p class="question-text">14. ما هو الرقم الذي يجب أن يحل محل علامة الاستفهام؟ (5, 10), (7, 14), (12, ?) </p>...</div>
+            <div class="question-card"><p class="question-text">15. إذا كانت (س + 5) = 12، فما قيمة س$^2$؟</p>...</div>
+            
+            </form>
+        
+        <div id="results"></div>
+
+    </div>
+
+    <div class="fixed-submit-bar">
+        <button id="submit-button" type="button">إنهاء الاختبار وحساب النتيجة النهائية</button>
+    </div>
+
+    <script>
+        // --- كود JavaScript ---
+        // (الإجابات الصحيحة ونقاطها كما هي في الكود السابق)
+        const correctAnswers = { /* ... (الإجابات الـ 15) ... */
+            q1: 'B', q2: 'D', q3: 'C', q4: 'C', q5: 'B', 
+            q6: 'D', q7: 'C', q8: 'C', q9: 'A', q10: 'B', 
+            q11: 'D', q12: 'D', q13: 'C', q14: 'B', q15: 'C'
+        };
+
+        const scorePerQuestion = 5;
+        const totalQuestions = Object.keys(correctAnswers).length;
+        const maxScore = totalQuestions * scorePerQuestion;
+
+        const form = document.getElementById('iq-test-form');
+        const resultsDiv = document.getElementById('results');
+        const submitButton = document.getElementById('submit-button'); // جلب الزر الجديد
+
+        // ربط الزر العائم بحدث الإرسال
+        submitButton.addEventListener('click', function(event) {
+            // تنفيذ نفس منطق الإرسال السابق (هذا الجزء هو الذي يحسب النتيجة)
+            
+            let score = 0;
+            let answeredCount = 0;
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = `q${i}`;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption) {
+                    answeredCount++;
+                    const userAnswer = selectedOption.value;
+                    
+                    if (userAnswer === correctAnswers[questionName]) {
+                        score += scorePerQuestion;
+                    }
+                }
+            }
+            
+            // التحقق من الإجابة على كل الأسئلة
+            if (answeredCount < totalQuestions) {
+                alert(`يجب الإجابة على جميع الأسئلة! لقد أجبت على ${answeredCount} من أصل ${totalQuestions} سؤال.`);
+                return;
+            }
+
+            // تحليل مستوى الذكاء
+            let iqLevel = "";
+            let percentage = (score / maxScore) * 100;
+
+            if (percentage >= 90) {
+                iqLevel = "عبقري (Genius): لديك مستوى عالٍ جداً من الذكاء.";
+            } else if (percentage >= 75) {
+                iqLevel = "مُتفوق (Superior): مستوى ذكاء أعلى من المتوسط.";
+            } else if (percentage >= 50) {
+                iqLevel = "متوسط (Average): مستوى ذكاء طبيعي ضمن الفئة الأغلب.";
+            } else {
+                iqLevel = "بحاجة إلى تطوير (Needs Development): قد تحتاج لتمارين إضافية.";
+            }
+            
+            // عرض النتيجة النهائية
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `
+                <h2>🎉 نتائج الاختبار الشامل 🎉</h2>
+                <p>النقاط الكلية: <strong>${score} / ${maxScore}</strong></p>
+                <p>نسبة الإجابة الصحيحة: <strong>${percentage.toFixed(1)}%</strong></p>
+                <div class="result-level">تصنيف مستوى الذكاء: <strong>${iqLevel}</strong></div>
+            `;
+            
+            // تمرير الشاشة إلى قسم النتائج
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
