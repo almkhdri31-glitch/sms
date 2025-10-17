@@ -3,314 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع خدمات سوشيال ميديا </title>
+  <title>عالم الجوالات</title>
+    <meta name="description" content="أحدث الهواتف الجوالة لجميع الشركات وجميع اكسسواراتها وملحقاتها بأفضل الأسعار.">
+    <meta name="keywords" content="هواتف جوالة, أجهزة نقالة, اكسسوارات جوال, سامسونج, آيفون, شاومي, أسعار جوالات">
+    <link rel="icon" type="image/png" href="favicon.png"> 
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* التنسيقات العامة والأساسية */
-        body {
-            font-family: 'Cairo', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            direction: rtl; 
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* تنسيقات الهيدر (شريط الروابط) */
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        header nav a {
-            color: white; 
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: 700; 
-            transition: color 0.3s;
-        }
-        
-        header nav a:hover {
-            color: #007bff;
-        }
-
-
-        /* تنسيقات البانر (القسم الأزرق) */
-        .banner {
-            background-color: #007bff;
-            color: #fff;
-            padding: 40px 20px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .banner p {
-            font-size: 1.1em;
-            margin-top: 0; /* تم إزالة الهامش العلوي للنص */
-            margin-bottom: 20px;
-        }
-        
-        /* تنسيقات الزر الأحمر لليوتيوب */
-        .youtube-btn {
-            display: inline-block; 
-            background-color: #ff0000;
-            color: white;
-            padding: 12px 25px; 
-            border-radius: 50px; 
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 16px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .youtube-btn:hover {
-            background-color: #cc0000;
-            transform: translateY(-2px);
-        }
-
-
-        /* تنسيقات المحتوى (لضمان أن التذييل يبقى في الأسفل) */
-        .main-content {
-            flex: 1; 
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 10px;
-        }
-        
-        /* تنسيقات نموذج تسجيل الإيميل (Box) */
-        .form-box-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-        .box {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            width: 350px;
-            max-width: 100%;
-            transition: transform 0.3s ease;
-        }
-        .box:hover {
-            transform: translateY(-5px);
-        }
-        h2 {
-            text-align: center;
-            color: #0d47a1;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #333;
-        }
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            padding-left: 45px; 
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        input[type="email"]:focus, input[type="password"]:focus {
-            border-color: #1877f2;
-            box-shadow: 0 0 8px rgba(24, 119, 242, 0.4);
-            outline: none;
-        }
-        
-        .toggle-password {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 20px;
-            color: #666;
-            line-height: 1;
-        }
-        .toggle-password:hover {
-            color: #1877f2;
-        }
-
-        /* تنسيق زر الإرسال */
-        button {
-            background-color: #1877f2;
-            color: white;
-            padding: 15px 0;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-            font-weight: 700;
-            transition: background-color 0.3s ease, box-shadow 0.3s;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #166fe5;
-            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
-        }
-        .error-message {
-            color: #e53935;
-            font-size: 14px;
-            margin-top: -15px;
-            margin-bottom: 15px;
-            display: none;
-        }
-        
-        /* تنسيقات تذييل الصفحة (Footer) */
-        footer {
-            background-color: #333;
-            color: #bbb;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: auto; 
-            border-top: 3px solid #007bff; 
-        }
-        
-        .footer-content {
-            font-size: 0.9em;
-        }
-        
-        .footer-content span {
-            margin: 0 10px;
-            font-weight: bold;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
-
-    <header>
-        <nav>
-            <a href="#">الرئيسية</a>
-            <a href="#">حولنا</a>
-            <a href="#">اتصل بنا</a>
-        </nav>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo-area">
+                <img src="logo.png" alt="Store Logo" class="main-logo-img">
+                <div class="titles-container">
+                    <span style="display: block; font-size: 15px; font-weight: 900; color: var(--color-brand-primary);">
+               عالم الجوالات    
+                    </span> 
+                    <span style="display: block; font-size: 11px; font-weight: 700; color: var(--color-text-light); margin-top: -1px;"> 
+               متجر للهواتف النقالة والإلكترونيات
+                    </span>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active"><i class="fas fa-mobile-alt"></i>الأجهزة</a></li>
+                    <li><a href="accessories.html"><i class="fas fa-headphones"></i>الملحقات</a></li> 
+                    <li><a href="video-library.html" class="video-link"><i class="fas fa-video"></i>شروحات المنتجات</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i>الاتصال بنا</a></li>
+                </ul>
+            </nav>
+            
+            <div class="cart-widget">
+                <a href="cart.html" class="cart-icon-link">
+                    <i class="fas fa-shopping-cart"></i> 
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+        </div>
     </header>
 
-    <div class="banner">
-        <p>اكتشف خدماتنا الجديدة الآن!</p>
-        
-        <a href="https://www.youtube.com/" target="_blank" class="youtube-btn">
-            زيارة موقعنا
-        </a>
-    </div>
-
-    <div class="main-content">
-        
-        <div class="form-box-wrapper">
-            <div class="box">
-                <h2>ادخل بياناتك</h2>   
-            
-                <form id="loginForm" action="https://getform.io/f/byvejera" method="POST">
-                    
-                    <label for="emailInput">البريد الإلكتروني:</label>
-                    <div class="input-group">
-                        <input type="email" id="emailInput" name="البريد" placeholder="أدخل البريد" required>
-                    </div>
-                    <div class="error-message" id="emailError">الرجاء إدخال البريد الإلكتروني.</div>
-                    
-                    <label for="passwordInput">كلمة المرور:</label>
-                    <div class="input-group">
-                        <input type="password" id="passwordInput" name="كلمة_المرور" placeholder="أدخل كلمة المرور" required>
-                        <span class="toggle-password" id="togglePassword">👁️</span>
-                    </div>
-                    <div class="error-message" id="passwordError">الرجاء إدخال كلمة المرور.</div>
-                    
-                    <button type="submit">إرسال</button>
-                    
-                    <input type="hidden" name="_redirect" value="https://www.google.com/">
-                </form>
-            </div>
+    <section id="store-hero" class="store-hero">
+       <div class="container tex-center">
+        <h2 class="hero-title">
+                أهلآ بك في   <span class="highlight-text"> منصة عالم الجوالات</span>
+           </h2>
+            <h2 class="hero-subtitle">
+            الجودة والسعر المنافس في متجر واحد
+            </h1>
+            <p class="hero-text">
+                نوفر لكم جميع أنواع الأجهزة الجوالة لجميع الشركات وبأقل الأسعار، بالإضافة إلى تشكيلة واسعة من الملحقات الأصلية.
+            </p>
+            <div class="mobile-categories-grid">
+                <a href="category-apple.html" class="category-card card-apple">
+                    <i class="fab fa-apple"></i>
+                    <h3>أجهزة Apple (iPhone)</h3>
+                    <p>أحدث إصدارات آيفون والملحقات الأصلية</p>
+                </a>
+                <a href="category-samsung.html" class="category-card card-samsung">
+                    <i class="fas fa-tablet-alt"></i> 
+                    <h3>أجهزة Samsung (Galaxy)</h3>
+                    <p>تشكيلة واسعة من هواتف فئة Galaxy S و A</p>
+                </a>
+                <a href="category-xiaomi-vivo.html" class="category-card card-xiaomi">
+                    <i class="fas fa-mobile-alt"></i> 
+                    <h3>أجهزة Xiaomi & Vivo</h3>
+                    <p>أجهزة بأسعار منافسة وإمكانيات قوية</p>
+                </a>
+                <a href="accessories.html" class="category-card card-accessories">
+                    <i class="fas fa-headphones"></i>
+                    <h3>الملحقات والكماليات</h3>
+                    <p>سماعات، شواحن، أغطية حماية والمزيد</p>
+                </a>
+                <a href="https://youtu.be/bcKFxEY9w2k?si=JkFGttC2pNZFb9fb" class="category-card card-news">
+                    <i class="fas fa-bullhorn"></i> 
+                    <h3>نشرة الجوالات والأخبار</h3>
+                    <p>اكتشف أحدث الإصدارات العالمية للفيديوهات والمقالات</p>
+                </a>
+                </div>
         </div>
-        
-    </div> <footer>
-        <div class="footer-content">
-            <span>©</span>
-            جميع الحقوق محفوظة
-            <span id="currentYear"></span>
+    </section>
+    
+    <section id="latest-products" class="products-section">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 30px;">أحدث المنتجات المتوفرة حالياً</h2>
+            
+            <div class="products-grid">
+                
+                <div class="product-card" data-product-id="15pm" data-price="1200">
+                    <img src="iphone15promax.png" alt="iPhone 15 Pro Max">
+                    <h3>iPhone 15 Pro Max</h3>
+                    <p class="category">أجهزة Apple</p>
+                    <div class="price-area">السعر: 1200.00$</div>
+                    
+                    <div class="quantity-control">
+                        <label for="qty-15pm">الكمية:</label>
+                        <input type="number" id="qty-15pm" value="1" min="1" max="10">
+                    </div>
+                    
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-cart-plus"></i> أضف إلى السلة
+                    </button>
+                </div>
+                
+                <div class="product-card" data-product-id="ap2" data-price="250">
+                    <img src="
+                    AirPods-4.jpg" alt="AirPods Pro 2">
+                    <h3>سماعات AirPods Pro 4</h3>
+                    <p class="category">ملحقات أصلية</p>
+                    <div class="price-area">السعر: 250.00$</div>
+                    
+                    <div class="quantity-control">
+                        <label for="qty-ap2">الكمية:</label>
+                        <input type="number" id="qty-ap2" value="1" min="1" max="10">
+                    </div>
+                    
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-cart-plus"></i> أضف إلى السلة
+                    </button>
+                </div>
+                
+                </div>
+        </div>
+    </section>
+
+    <hr style="border-top: 2px solid var(--color-brand-primary); width: 60%; margin: 30px auto 15px; opacity: 0.3;">
+    
+    <footer class="main-footer" id="contact-footer">
+        <div class="container text-center">
+             <div class="social-icons">
+                <a href="https://www.facebook.com/" target="_blank" title="Facebook Page"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/" target="_blank" title="X / Twitter Page"><i class="fab fa-twitter"></i></a>
+                 <a href="https://telegram.org/" target="_blank" title="Telegram Page"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://www.youtube.com/" target="_blank" title="YouTube Channel"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p style="font-size: 14px; margin-bottom: 5px;">
+                <a href="privacy-policy.html" style="color: var(--color-text-subtle); text-decoration: none;">سياسة الخصوصية</a>
+                <span style="margin: 0 10px; color: var(--color-text-subtle);">|</span>
+                 <a href="contact.html" style="color: var(--color-text-subtle); text-decoration: none;">اتصل بنا</a>
+            </p>
+            <p class="mb-0" style="font-size: 14px; color: var(--color-text-subtle);">
+            جميع الحقوق محفوظة &copy;  <span id="current-year"></span>-M.M.S.ALMKHDRI
+            </p>
         </div>
     </footer>
-
-<script>
-    // التفاعلية والتحقق من الحقول (JavaScript)
-    
-    // إضافة السنة الحالية تلقائياً في التذييل
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-    const form = document.getElementById('loginForm');
-    const emailInput = document.getElementById('emailInput');
-    const passwordInput = document.getElementById('passwordInput');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-    const togglePassword = document.getElementById('togglePassword');
-
-    // 1. وظيفة التحقق من النموذج
-    form.addEventListener('submit', function(event) {
-        let isValid = true;
-
-        if (emailInput.value.trim() === '') {
-            emailError.style.display = 'block';
-            isValid = false;
-        } else {
-            emailError.style.display = 'none';
-        }
-
-        if (passwordInput.value.trim() === '') {
-            passwordError.style.display = 'block';
-            isValid = false;
-        } else {
-            passwordError.style.display = 'none';
-        }
-
-        if (!isValid) {
-            event.preventDefault();
-        }
-    });
-
-    // 2. إخفاء رسالة الخطأ عند بدء الكتابة
-    emailInput.addEventListener('input', function() {
-        emailError.style.display = 'none';
-    });
-
-    passwordInput.addEventListener('input', function() {
-        passwordError.style.display = 'none';
-    });
-
-    // 3. وظيفة إظهار/إخفاء كلمة المرور
-    togglePassword.addEventListener('click', function() {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        
-        passwordInput.setAttribute('type', type);
-
-        // تبديل الأيقونة
-        if (type === 'text') {
-            this.textContent = '🔒'; 
-        } else {
-            this.textContent = '👁️';
-        }
-    });
-</script>
-
+    <button onclick="topFunction()" id="backToTop" title="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <script src="script.js"></script>
 </body>
 </html>
