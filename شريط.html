@@ -1,0 +1,69 @@
+</header>
+<div class="news-ticker-container">
+    <div id="rss-ticker-content" class="news-ticker-content">
+        <span style="color:var(--color-brand-primary);">
+            [★] جاري تحديث آخر تحذيرات الأمن السيبراني والثغرات الحرجة... [★]
+        </span>
+    </div>
+</div>
+<section id="home" class="hero-section">
+    ```
+
+### الخطوة 2: إضافة كود CSS للشريط
+
+ضع التنسيقات التالية داخل وسم `<style>` في ملفك، ويفضل أن يكون ذلك في نهاية تنسيقات الهيدر وقائمة التنقل (قبل قسم البطل).
+
+```css
+/* تنسيقات الشريط الإخباري المتحرك (News Ticker) */
+.news-ticker-container {
+    overflow: hidden;
+    white-space: nowrap; /* يمنع نزول النص لسطر جديد */
+    width: 100%;
+    /* خلفية داكنة متوافقة مع تصميمك */
+    background-color: var(--color-bg-secondary); 
+    padding: 8px 0;
+    /* خط فاصل مميز بلون ذهبي */
+    border-bottom: 3px solid var(--color-brand-primary); 
+    position: relative; /* لضمان ظهور الشريط فوق الخلفية الداكنة */
+    z-index: 999; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.news-ticker-content {
+    display: inline-block;
+    animation: marquee 35s linear infinite; /* وقت أطول لحركة أسلس */
+    padding-right: 100%; /* يبدأ النص من خارج اليسار (لأن الموقع RTL) */
+    font-size: 14px;
+}
+
+.news-ticker-content:hover {
+    animation-play-state: paused;
+}
+
+/* تنسيق الخبر الفردي (الذي سيتم جلبه بالجافاسكريبت) */
+.news-item {
+    margin-left: 50px; /* المسافة بين الخبر والخبر التالي في الاتجاه RTL */
+    color: var(--color-text-light); 
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 700;
+}
+
+.news-item:hover {
+    color: var(--color-brand-primary); /* اللون الذهبي عند التمرير */
+}
+
+/* فاصل مميز */
+.separator {
+    color: var(--color-accent-secondary); /* البرتقالي للفواصل */
+    margin: 0 10px;
+    font-weight: 900;
+}
+
+/* تعريف حركة الـ Marquee (من اليمين إلى اليسار ليتوافق مع RTL) */
+@keyframes marquee {
+    /* يبدأ من خارج الشاشة على اليمين (100% بالنسبة للحاوية) */
+    0% { transform: translateX(100%); } 
+    /* ينتهي عند خروجه من اليسار بالكامل */
+    100% { transform: translateX(-100%); } 
+}

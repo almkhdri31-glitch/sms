@@ -1,82 +1,109 @@
-/* ========================================================= */
-/* 1. تنسيقات عامة (Body و إعادة الضبط) */
-/* ========================================================= */
 body {
-    /* الخط الافتراضي */
+    /* الخلفية والخطوط الأساسية */
     font-family: 'Arial', sans-serif;
-    /* إزالة الهوامش والحشوات الافتراضية */
-    margin: 0;
-    padding: 0;
-    /* لون الخلفية الأساسي للصفحة */
-    background-color: #f4f4f4; 
-    /* لون النص الأساسي */
+    background-color: #f4f7f6;
     color: #333;
-    /* تحديد اتجاه النص من اليمين لليسار (rtl) لدعم اللغة العربية */
-    direction: rtl;
+    margin: 0;
+    padding: 20px;
+    
+    /* دعم اللغة العربية (من اليمين لليسار) */
+    direction: rtl; 
     text-align: right;
 }
 
-/* ========================================================= */
-/* 2. تنسيقات العنوان الرئيسي (Header) */
-/* ========================================================= */
-.main-header {
-    background-color: #007BFF; /* لون أزرق جذاب */
-    color: white; /* نص أبيض */
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.container {
+    /* حاوية المحتوى الرئيسية */
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.main-header h1 {
-    margin: 0;
-    font-size: 2em;
+h1 {
+    /* تصميم العنوان */
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
 }
 
-/* ========================================================= */
-/* 3. تنسيقات الفئة الجديدة (new-section) - العنصر الذي لم يكن يظهر */
-/* ========================================================= */
-.new-section {
-    background-color: #ffffff; /* خلفية بيضاء لتمييزه */
-    border: 3px solid #28a745; /* حدود خضراء واضحة جداً */
-    padding: 25px; /* حشوة داخلية كبيرة */
-    margin: 30px auto; /* مسافة من الأعلى والأسفل وتوسيط أفقي */
-    width: 90%; 
-    max-width: 800px; /* تحديد أقصى عرض له */
-    border-radius: 10px; 
-    text-align: center;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* ظل واضح */
+.form-group {
+    /* تباعد مجموعات الإدخال */
+    margin-bottom: 20px;
 }
 
-.new-section h2 {
-    color: #28a745; /* لون العنوان داخل القسم الجديد */
-    margin-top: 0;
+label {
+    /* تصميم التسميات */
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
-/* ========================================================= */
-/* 4. تنسيقات قسم المحتوى الأساسي */
-/* ========================================================= */
-.content-section {
-    padding: 20px;
-    margin: 20px auto;
-    width: 90%;
-    max-width: 800px;
-    background-color: white;
-    border-radius: 5px;
-    line-height: 1.6;
+textarea, input[type="file"], input[type="text"] {
+    /* تصميم حقول الإدخال */
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box; 
 }
 
-/* ========================================================= */
-/* 5. تنسيقات التذييل (Footer) */
-/* ========================================================= */
-.main-footer {
-    background-color: #333;
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+button {
+    /* تصميم زر إنشاء الفيديو */
+    background-color: #28a745;
     color: white;
-    text-align: center;
-    padding: 15px;
-    margin-top: 40px; 
-    /* يمكن إزالة التثبيت (position: fixed) لتجنب تداخل الـ Footer مع المحتوى */
-}
-    /* حجم الخط */
-    font-size: 1.1em;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
+button:hover {
+    background-color: #218838;
+}
+
+.hidden {
+    /* إخفاء العناصر */
+    display: none;
+}
+
+#statusMessage {
+    /* رسالة "جارٍ العمل..." */
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ffc107;
+    color: #333;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#resultArea {
+    /* منطقة عرض رابط التحميل */
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    text-align: center;
+}
+
+#downloadLink {
+    /* رابط التحميل */
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}

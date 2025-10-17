@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحويل النص إلى كلام آلي (صوت وصورة)</title>
+    <style>
+        /* تنسيقات بسيطة للصفحة */
+        body {
+            direction: rtl;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f9;
+        }
+        .content-box {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        #textToSpeak {
+            font-size: 20px;
+            color: #007bff;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            min-height: 100px;
+            resize: vertical;
+            width: 95%;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1e7e34;
+        }
+        /* تأثير الصورة المتحركة (كأنها فيديو أو مقدم برامج) */
+        #avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ffc107; /* لون يمثل صورة أو شخصية */
+            margin: 20px auto;
+            border: 5px solid transparent;
+            /* Animation for 'speaking' effect */
+            transition: border-color 0.1s ease-in-out;
+        }
+        .speaking {
+            border-color: #dc3545 !important; /* يتغير لون الإطار عند التحدث */
+            animation: pulse 1s infinite alternate; /* تأثير النبض عند التحدث */
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-box">
+        <h1>صانع المحتوى الآلي</h1>
+
+        <textarea id="textToSpeak">
+        مرحباً بكم! هذا اختبار لخاصية تحويل النص إلى كلام آلي باستخدام جافاسكريبت.
+        أرجو أن تكون هذه المساعدة هي ما تبحثون عنه بالضبط.
+        </textarea>
+
+        <div id="avatar"></div>
+
+        <button onclick="startSpeaking()">اضغط هنا للاستماع (صوت آلي)</button>
+    </div>
+
+    <script>
+        // دالة تحويل النص إلى كلام آلي
+        function startSpeaking() {
+            // التحقق من دعم المتصفح لـ Web Speech API
+            if ('speechSynthesis' in window) {
+                const textInput = document.getElementById('textToSpeak');
+                const text = textInput.value;
+                const avatar = document.getElementById('avatar');
+
+                // إعداد خاصية التوليف الصوتي
+                const utterance = new SpeechSynthesisUtterance(text);
+
+                // **تحديد اللغة العربية (الأهم)**
+                // يجب أن يحدد الكود لغة صوت عربية، وإلا سيقرأها بلغة أخرى (غالباً الإنجليزية)
+                // قد تختلف أسماء الأصوات المتاحة حسب نظام التشغيل والمتصفح
+                utterance.lang = 'ar-SA'; 
+                // يمكنك تجربة تغيير الصوت إذا كان متوفراً:
+                // utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === 'ar-SA');
+
+
+                // إضافة تأثير مرئي (بداية التحدث)
+                utterance.onstart = () => {
+                    avatar.classList.add('speaking');
+                };
+
+                // إزالة التأثير المرئي (نهاية التحدث)
+                utterance.onend = () => {
+                    avatar.classList.remove('speaking');
+                };
+
+                // تشغيل القراءة
+                window.speechSynthesis.speak(utterance);
+
+            } else {
+                // رسالة للمتصفحات غير المدعومة
+                alert('عفواً، متصفحك لا يدعم خاصية تحويل النص إلى كلام (Web Speech API). يرجى استخدام متصفح حديث مثل Chrome أو Firefox.');
+            }
+        }
+    </script>
+
+</body>
+</html>

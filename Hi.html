@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+
+</head>
+<body>
+    <header class="main-header">
+      
+             
+            </div>
+            <p style="font-size: 14px; margin-bottom: 5px;">
+                <a href="privacy-policy.html" style="color: var(--color-text-subtle); text-decoration: none;">سياسة الخصوصية</a>
+                <span style="margin: 0 10px; color: var(--color-text-subtle);">|</span>
+                 <a href="contact.html" style="color: var(--color-text-subtle); text-decoration: none;">اتصل بنا</a>
+            </p>
+            <p class="mb-0" style="font-size: 14px; color: var(--color-text-subtle);">
+            جميع الحقوق محفوظة &copy;  <span id="current-year"></span>-M.M.S.ALMKHDRI
+            </p>
+        </div>
+    </footer>
+
+    <button onclick="topFunction()" id="backToTop" title="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <script>
+        // الكود الأصلي لتشغيل قائمة التنقل وتحديث التاريخ
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNav = document.querySelector('.main-nav');
+        
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+        const navLinks = document.querySelectorAll('.main-nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                const href = link.getAttribute('href');
+                const isDropdownLink = link.closest('.dropdown-menu'); 
+                
+                if (href === '#' || href.startsWith('#')) {
+                    mainNav.classList.remove('active');
+                } 
+                else if (isDropdownLink) {
+                     mainNav.classList.remove('active');
+                }
+                else {
+                    setTimeout(() => {
+                       mainNav.classList.remove('active');
+                    }, 50); 
+                }
+            });
+        });
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+
+        // ********************* START: كود زر العودة للأعلى *********************
+        let mybutton = document.getElementById("backToTop");
+
+        // إظهار الزر عند التمرير 20 بكسل لأسفل
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+          } else {
+            mybutton.style.display = "none";
+          }
+        }
+
+        // عند النقر على الزر، انتقل للأعلى
+        function topFunction() {
+          document.body.scrollTop = 0; // لمتصفح سفاري
+          document.documentElement.scrollTop = 0; // لمتصفحات كروم وفايرفوكس وإيدج
+        }
+        // ********************* END: كود زر العودة للأعلى *********************
+        
+        // ملاحظة: تم حذف كود جلب الأخبار (RSS) بالكامل لضمان عدم ظهور أخطاء الاتصال.
+    </script>
+</body>
+</html>

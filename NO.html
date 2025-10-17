@@ -1,0 +1,377 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السيرة الذاتية - CV</title>
+    <style>
+        /* ********************************************************* */
+        /* تنسيقات النموذج (صفحة الإدخال) - بدون تغيير */
+        /* ********************************************************* */
+        body {
+            font-family: 'Arial', 'Helvetica Neue', sans-serif; 
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            padding: 0; 
+            margin: 0;
+            direction: rtl; 
+        }
+        
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"], textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; 
+            display: block;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        header {
+            background-color: #17202A;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+        }
+        footer {
+            background-color: #17202A;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 30px; 
+            font-size: 0.9em;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto; 
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cv-title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            color: #17202A;
+            margin-bottom: 5px;
+            letter-spacing: 5px;
+        }
+
+        .header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        #profile-image {
+            width: 100px !important;
+            height: 100px !important;
+            max-width: 100px !important; 
+            max-height: 100px !important; 
+            background-color: #e9ecef; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 2px solid #007bff;
+            display: block; 
+            margin: 0 auto 10px auto; 
+            opacity: 0.7; 
+        }
+        
+        #profile-image[src]:not([src=""]) {
+            opacity: 1; 
+            border: 2px solid #28a745; 
+        }
+
+        .image-upload-container input[type="file"] {
+            display: none;
+        }
+
+        .upload-label {
+            display: block;
+            cursor: pointer;
+            color: #007bff;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+        
+        h2 {
+            color: #007bff;
+            border-bottom: 2px solid #007bff; /* الخط الأزرق الذي سيتم تعديله في الطباعة */
+            padding-bottom: 5px;
+            margin-top: 25px;
+            font-size: 20px; 
+            font-weight: 600; 
+        }
+
+        .section-content {
+            margin-bottom: 20px;
+            padding-right: 15px;
+        }
+        
+        .print-button-on-form {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 25px;
+            transition: background-color 0.3s;
+        }
+
+        .print-area {
+             display: flex !important; 
+        }
+        form {
+             display: block !important; 
+        }
+        
+        #printable-cv {
+            display: none; 
+        }
+        
+        .skills-options div {
+             display: inline-block;
+             margin-left: 10px;
+             margin-bottom: 5px;
+        }
+
+        .language-entry, .reference-entry {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .language-entry input[type="text"], 
+        .language-entry input[type="number"] {
+            width: calc(50% - 15px);
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .reference-entry input {
+            margin-bottom: 10px;
+        }
+        
+        /* ********************************************************* */
+        /* تنسيقات صفحة الطباعة (الحل الهندسي لمشاكل التقطيع والوضوح) */
+        /* ********************************************************* */
+        @media print {
+            
+            @page {
+                margin: 0.5cm !important; 
+                padding: 0 !important;
+            }
+
+            body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-family: 'Arial', 'Helvetica Neue', sans-serif !important; 
+                font-size: 12px !important; 
+            }
+            
+            /* إخفاء عناصر النموذج الأساسية */
+            .print-area, form, .print-actions, .print-button-on-form, header, footer { 
+                display: none !important;
+            }
+            
+            #printable-cv {
+                display: block !important; 
+                width: 100% !important; 
+                position: relative; 
+                background: white;
+                box-sizing: border-box;
+                padding: 0;
+                margin: 0;
+            }
+            
+            /* تفعيل طباعة الألوان */
+            .sidebar-column, .main-content-column h2, .lang-bar-fill, #cv-print-header {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            /* ********************************************************* */
+            /* 1. نظام الأعمدة ومنع التقطيع */
+            /* ********************************************************* */
+            
+            #print-content-columns {
+                display: grid !important; 
+                grid-template-columns: 35% 65% !important; 
+                gap: 0; 
+                position: relative;
+            }
+            
+            /* العمود الجانبي الملون (Sidebar - على اليمين) */
+            .sidebar-column {
+                background-color: #5B4F46 !important; 
+                color: #FFFFFF !important; /* النص العادي: أبيض ناصع لتباين ممتاز */
+                padding: 20px 10px 10px 10px !important; 
+                order: 1; 
+            }
+            
+            /* عمود المحتوى الرئيسي (على اليسار) */
+            .main-content-column {
+                padding: 20px 20px 20px 15px !important; 
+                order: 2; 
+                background: white;
+            }
+
+            /* منع قطع المحتوى داخل الأقسام (الحل الرئيسي لمشكلة التقطيع) */
+            .main-content-column h2, 
+            .sidebar-column h2,
+            .section-content,
+            .language-entry-print,
+            .reference-entry-print {
+                page-break-inside: avoid !important; /* للطباعة */
+                -webkit-column-break-inside: avoid !important; /* لمتصفحات كروم */
+                break-inside: avoid !important; /* للجميع */
+            }
+            
+            /* ********************************************************* */
+            /* 2. تحسين وضوح العناوين في العمود الرئيسي (اللون الأبيض) */
+            /* ********************************************************* */
+            
+            /* العناوين في العمود الرئيسي (أسود داكن مع خط رمادي) */
+            .main-content-column h2 {
+                color: #17202A !important; /* لون النص: أسود داكن */
+                border-bottom: 2px solid #6c757d !important; /* لون الخط السفلي: رمادي غامق احترافي */
+                padding-bottom: 3px !important; 
+                margin-top: 15px !important; 
+                font-size: 16px !important; 
+                font-weight: 700 !important;
+                display: block !important;
+                border-left: none !important; 
+                padding-left: 0 !important;
+            }
+            
+            .main-content-column h2::after {
+                display: none !important; 
+            }
+            
+            /* تنسيق عنوان "CV" في العمود الرئيسي (على اليسار) */
+            #cv-print-header {
+                 text-align: left !important; /* كلمة CV على اليسار */
+                 font-size: 30px !important; 
+                 margin-bottom: 10px !important;
+                 letter-spacing: 5px !important; 
+                 border-bottom: 2px solid #6c757d !important; /* رمادي غامق */
+                 padding-bottom: 5px;
+                 color: #17202A !important; /* أسود داكن */
+            }
+            
+            /* ********************************************************* */
+            /* 3. تنسيق العناوين داخل العمود الجانبي (البني الداكن) */
+            /* ********************************************************* */
+            
+            .header-sidebar-container-print {
+                text-align: center !important; 
+                margin-bottom: 20px !important;
+                color: white !important; 
+            }
+             
+            .sidebar-column h2 {
+                color: #f8f9fa !important; /* العناوين الفرعية داخل البني: رمادي فاتح (أنيق وجذاب) */
+                border-bottom: 1px solid #f8f9fa !important; /* خط فاصل رمادي فاتح */
+            }
+
+            .image-upload-container-print {
+                display: block !important;
+                width: 80px !important; 
+                height: 80px !important;
+                margin: 0 auto 8px auto !important; 
+            }
+
+            .image-upload-container-print img {
+                width: 100% !important;
+                height: 100% !important;
+                border-radius: 50% !important;
+                object-fit: cover !important;
+                border: 2px solid #fff !important; 
+            }
+            
+            .header-sidebar-container-print h1 {
+                font-size: 18px !important; 
+                margin: 5px 0 0 0 !important;
+            }
+            
+            .header-sidebar-container-print h3 {
+                font-size: 12px !important; 
+                margin: 2px 0 0 0 !important;
+            }
+            
+            .lang-bar-fill {
+                 background-color: #f8f9fa !important; /* لون ملء شريط اللغة: رمادي فاتح */
+            }
+             
+             .main-content-column .section-content {
+                margin-bottom: 10px !important;
+            }
+            .main-content-column p, .main-content-column li {
+                font-size: 12px !important;
+                line-height: 1.4 !important;
+                color: #333 !important; /* ضمان أن النص في العمود الأبيض أسود داكن */
+            }
+        }
+    </style>
+</head><div class="security-card tag-high">
+    <div class="card-header">
+        <span class="alert-tag tag-high">🚨 حرج جداً</span>
+    </div>
+    <div class="card-body">
+        <h3>ثغرةخطيرة جديدة (7600)</h3>
+        <p class="alert-summary">اصلاح فوري</p>
+        <p class="alert-solution">**الحل:** جدا</p>
+        <p class="alert-date">تاريخ النشر: 2025-10-12</p>
+    </div>
+    <div class="card-footer">
+        <span class="level-indicator tag-high">حرج جداً</span>
+    </div>
+</div>
+<div class="security-card tag-high">
+    <div class="card-header">
+        <span class="alert-tag tag-high">🚨 حرج جداً</span>
+    </div>
+    <div class="card-body">
+        <h3>ثغرة أمنية في انضمة اندرويد (CVE 600)</h3>
+        <p class="alert-summary">تسمح للمهاجمين التحكم الكامل بجهازك</p>
+        <p class="alert-solution">**الحل:** تحديث نظامك لآخر اصدار</p>
+        <p class="alert-date">تاريخ النشر: 2025-10-12</p>
+    </div>
+    <div class="card-footer">
+        <span class="level-indicator tag-high">حرج جداً</span>
+    </div>
+</div>
+<div class="security-card tag-low">
+    <div class="card-header">
+        <span class="alert-tag tag-low">ℹ️ منخفض</span>
+    </div>
+    <div class="card-body">
+        <h3>Hhhh (6666)</h3>
+        <p class="alert-summary">تلم</p>
+        <p class="alert-solution">**الحل:** تفاديًا للتسلل غير القانوني عبر الثغرات الأمنية وُجد ما يُعرف بمنصات مكافأة الثغرات وتمارين الفريق الأحمر، تعترف بها العديد من الحكومات حول العالم وتموّلها، وتُعرَف منصة بق بونتي بوصفها أشهرمنصات مكافآت الثغرات في الشرق الأوسط.</p>
+        <p class="alert-date">تاريخ النشر: 2025-10-12</p>
+    </div>
+    <div class="card-footer">
+        <span class="level-indicator tag-low">منخفض</span>
+    </div>
+</div>
